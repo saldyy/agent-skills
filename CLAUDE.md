@@ -16,6 +16,10 @@ The repo root doubles as both a Claude Code **plugin** and a single-plugin **mar
 
 `.claude/skills/nodejs` is a symlink to `../../skills/nodejs`, so the same skill also auto-loads as a plain project skill for anyone who just clones the repo and opens it in Claude Code directly (no plugin install needed). **When adding a new skill directory under `skills/<name>/`, add a matching symlink under `.claude/skills/<name>` pointing to `../../skills/<name>` to keep both paths working.**
 
+## Commands
+
+`.claude/commands/*.md` holds project-specific slash commands (e.g. `review-claude.md` → `/review-claude`) — plain Markdown files with the same frontmatter fields as a skill, but no supporting directory. Use a command instead of a full skill when the content is a one-shot procedure invoked by name, not background knowledge Claude should auto-load.
+
 ## Structure
 
 Each skill lives under `skills/<skill-name>/` and follows this layout:

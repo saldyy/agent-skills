@@ -5,5 +5,8 @@
   "author": {
     "name": "saldyy"
   },
-  "repository": "https://github.com/saldyy/agent-skills"
+  "repository": "https://github.com/saldyy/agent-skills",
+  "homepage": "https://github.com/saldyy/agent-skills",
+  "license": "MIT",
+  "skills": "./skills"
 }
