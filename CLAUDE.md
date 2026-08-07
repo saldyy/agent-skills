@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository purpose
 
-This is a growing collection of Claude Agent Skills spanning multiple languages and disciplines (currently Node.js; Go, Python, and DevOps are planned) — reusable, discoverable knowledge packages that get loaded into an agent's context when their trigger conditions match. There is no application code, build step, or test suite here; the "product" is the Markdown/skill content itself, plus small example assets referenced from that content.
+This is a growing collection of Claude Agent Skills spanning multiple languages and disciplines (currently Node.js and Go; Python and DevOps are planned) — reusable, discoverable knowledge packages that get loaded into an agent's context when their trigger conditions match. There is no application code, build step, or test suite here; the "product" is the Markdown/skill content itself, plus small example assets referenced from that content.
 
 ## Distribution: this repo is a Claude Code plugin + marketplace
 
@@ -23,7 +23,7 @@ Each skill lives under `skills/<skill-name>/` and follows this layout:
 - `SKILL.md` — the entry point. YAML frontmatter (`name`, `description`, `metadata.tags`) followed by the skill body. The `description` field is what a model uses to decide *when* to load the skill, so it must enumerate concrete trigger phrases/keywords, not just a category name.
 - `rules/*.md` — individual topic files, each with its own frontmatter (`name`, `description`, `metadata.tags`) and focused content (one topic per file, ~100–450 lines). `SKILL.md` links to every rule file and should stay in sync with what's on disk — if you add, remove, or rename a rule file, update the corresponding link/list in `SKILL.md`.
 - `rules/assets/` — runnable example code referenced by rule files (e.g. `graceful-server.ts` + its `graceful-server.test.ts`). These are illustrative reference implementations, not a tested/built package — there's no `package.json`/CI wired to them in this repo.
-- `tile.json` — a per-skill manifest (`name`, `version`, `summary`, `skills.<key>.path`) predating the plugin/marketplace setup above; not read by Claude Code itself. The `summary` field mirrors `SKILL.md`'s frontmatter `description` and should be kept in sync with it if both are kept.
+- `tile.json` — a per-skill manifest (`name`, `version`, `summary`, `skills.<key>.path`) predating the plugin/marketplace setup above; not read by Claude Code itself, and not required for new skills (the `golang` skill omits it; `nodejs` keeps its existing one for back-compat). The `summary` field mirrors `SKILL.md`'s frontmatter `description` and should be kept in sync with it if both are kept.
 
 ## Working on a skill
 
