@@ -9,22 +9,22 @@ metadata:
 
 ## Use Type Stripping
 
-Node.js 22.6+ supports running TypeScript files directly by stripping types at runtime. In Node.js 23.6+ and 24+, type stripping is enabled by default.
+Node.js 24+ runs TypeScript files directly by stripping types at runtime, enabled by default — no flag required.
 
-### node.js 20.x and 22.x
-
-Enable with the experimental flag:
-
-```bash
-node --experimental-strip-types app.ts
-```
-
-### Node.js 22.19+, 23.6+ and 24+
+### Node.js 22.19+, 23.6+, and 24+ (recommended)
 
 TypeScript files run directly without flags:
 
 ```bash
 node app.ts
+```
+
+### Node.js 20.x and pre-22.19 22.x (legacy)
+
+On older versions, enable it with the experimental flag:
+
+```bash
+node --experimental-strip-types app.ts
 ```
 
 ## Type Stripping Requirements
@@ -140,7 +140,7 @@ Configure TypeScript for development with type stripping:
 ```json
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2024",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "strict": true,
@@ -151,7 +151,7 @@ Configure TypeScript for development with type stripping:
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "allowImportingTsExtensions": true,
-    "lib": ["ES2022"],
+    "lib": ["ES2024"],
     "types": ["node"]
   },
   "include": ["src/**/*.ts", "test/**/*.ts"],
@@ -172,7 +172,7 @@ Create a separate config for building distributable packages:
 ```json
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2024",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "strict": true,
@@ -188,7 +188,7 @@ Create a separate config for building distributable packages:
     "verbatimModuleSyntax": true,
     "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true,
-    "lib": ["ES2022"],
+    "lib": ["ES2024"],
     "types": ["node"]
   },
   "include": ["src/**/*.ts"],
@@ -207,7 +207,7 @@ Key build options:
 Use the built-in test runner with TypeScript:
 
 ```bash
-# Node.js 22.19+/23.6+/24+
+# Node.js 24+ (type stripping enabled by default)
 node --test test/*.test.ts
 ```
 
@@ -244,7 +244,7 @@ Configure package.json for ESM with TypeScript:
     "typecheck": "tsc --noEmit"
   },
   "engines": {
-    "node": ">=22.6.0"
+    "node": ">=24.0.0"
   }
 }
 ```

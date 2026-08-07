@@ -1,6 +1,6 @@
 ---
 name: nodejs
-description: Provides domain-specific best practices for Node.js development with TypeScript, covering type stripping, async patterns, error handling, streams, modules, testing, performance, caching, logging, and more. Use when setting up Node.js projects with native TypeScript support, configuring type stripping (--experimental-strip-types), writing Node 22+ TypeScript without a build step, or when the user mentions 'native TypeScript in Node', 'strip types', 'Node 22 TypeScript', '.ts files without compilation', 'ts-node alternative', or needs guidance on error handling, graceful shutdown, flaky tests, profiling, or environment configuration in Node.js. Helps configure tsconfig.json for type stripping, set up package.json scripts, handle module resolution and import extensions, and apply robust patterns across the full Node.js stack.
+description: Provides domain-specific best practices for Node.js development with TypeScript, covering type stripping, async patterns, error handling, streams, modules, testing, performance, caching, logging, and more. Use when setting up Node.js projects with native TypeScript support, configuring type stripping (enabled by default on Node.js 24+, --experimental-strip-types on older versions), writing Node 24+ TypeScript without a build step, or when the user mentions 'native TypeScript in Node', 'strip types', 'Node 24 TypeScript', '.ts files without compilation', 'ts-node alternative', or needs guidance on error handling, graceful shutdown, flaky tests, profiling, or environment configuration in Node.js. Helps configure tsconfig.json for type stripping, set up package.json scripts, handle module resolution and import extensions, and apply robust patterns across the full Node.js stack.
 metadata:
   tags: node, nodejs, javascript, typescript, type-stripping, backend, server
 ---
@@ -11,7 +11,7 @@ Use this skill whenever you are dealing with Node.js code to obtain domain-speci
 
 ## TypeScript with Type Stripping
 
-When writing TypeScript for Node.js, use **type stripping** (Node.js 22.6+) instead of build tools like ts-node or tsx. Type stripping runs TypeScript directly by removing type annotations at runtime without transpilation.
+When writing TypeScript for Node.js, use **type stripping** (default on Node.js 24+, no flag required) instead of build tools like ts-node or tsx. Type stripping runs TypeScript directly by removing type annotations at runtime without transpilation.
 
 Key requirements for type stripping compatibility:
 - Use `import type` for type-only imports

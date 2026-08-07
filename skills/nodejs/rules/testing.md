@@ -9,7 +9,7 @@ metadata:
 
 ## Node.js Built-in Test Runner
 
-Use the built-in test runner (Node.js 22+):
+Use the built-in test runner (Node.js 24+):
 
 ```typescript
 import { describe, it, before, after } from 'node:test';
@@ -207,7 +207,7 @@ node --test
 # Run specific file
 node --test src/user/user.service.test.ts
 
-# With TypeScript (Node.js 22.6+)
+# With TypeScript (Node.js 24+, type stripping enabled by default)
 node --test src/**/*.test.ts
 
 # With coverage
