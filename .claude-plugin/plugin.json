@@ -1,0 +1,9 @@
+{
+  "name": "agent-skills",
+  "description": "A collection of domain-specific best-practice skills for Claude Code, covering multiple languages and disciplines.",
+  "version": "0.1.0",
+  "author": {
+    "name": "saldyy"
+  },
+  "repository": "https://github.com/saldyy/agent-skills"
+}

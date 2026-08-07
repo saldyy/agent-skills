@@ -1,0 +1,13 @@
+{
+  "name": "saldyy-skills",
+  "owner": {
+    "name": "saldyy"
+  },
+  "plugins": [
+    {
+      "name": "agent-skills",
+      "source": ".",
+      "description": "A collection of domain-specific best-practice skills for Claude Code, covering multiple languages and disciplines."
+    }
+  ]
+}
