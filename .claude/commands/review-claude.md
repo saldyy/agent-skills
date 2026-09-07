@@ -10,7 +10,7 @@ Review the content that Claude Code actually loads from this repo: skills, comma
 ## Scope
 
 - `.claude/commands/*.md` — project commands (including this file)
-- `.claude/skills/*` — resolve each entry; in this repo they're symlinks into `skills/<name>/`, so review the target directory's actual content
+- `.claude/skills/*` — this directory should not exist (see Structure checks below); if it does, treat any entry as a finding
 - `skills/<name>/SKILL.md` and `skills/<name>/rules/*.md`
 - `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
 
@@ -24,7 +24,7 @@ Review the content that Claude Code actually loads from this repo: skills, comma
 **Structure**
 - Every file linked from a `SKILL.md`'s rules list actually exists at that path.
 - Every file under `rules/*.md` is linked from its `SKILL.md` — flag orphaned rule files nothing points to.
-- Every `skills/<name>/` has a matching `.claude/skills/<name>` symlink (and vice versa) per the convention in `CLAUDE.md`; flag any that's missing, broken, or pointing at the wrong target.
+- `.claude-plugin/plugin.json` declares `"skills": "./skills"`, which auto-discovers every `skills/<name>/` directory — no `.claude/skills/<name>` symlink is needed for a skill to load, and `.claude/skills/` should not exist at all per `CLAUDE.md`. Flag any symlink or file found under `.claude/skills/` as a finding to remove.
 
 **Content accuracy**
 - Version-specific claims (language/runtime versions, flags, API availability) are internally consistent within a file and across sibling rule files covering the same topic.

@@ -14,7 +14,7 @@ The repo root doubles as both a Claude Code **plugin** and a single-plugin **mar
 - `.claude-plugin/marketplace.json` — marketplace catalog (`name: saldyy-skills`) listing this repo as its one plugin (`source: "."`). Note: the marketplace name intentionally differs from the plugin name — `agent-skills` is on Claude Code's reserved marketplace-name list, so only the *marketplace* needed a different name.
 - Install path for others: `/plugin marketplace add saldyy/agent-skills` then `/plugin install agent-skills@saldyy-skills`. Local dev: `claude --plugin-dir /path/to/agent-skills`.
 
-`.claude/skills/nodejs` is a symlink to `../../skills/nodejs`, so the same skill also auto-loads as a plain project skill for anyone who just clones the repo and opens it in Claude Code directly (no plugin install needed). **When adding a new skill directory under `skills/<name>/`, add a matching symlink under `.claude/skills/<name>` pointing to `../../skills/<name>` to keep both paths working.**
+The plugin manifest's `"skills": "./skills"` field already tells Claude Code to auto-discover every top-level `skills/<name>/` directory as a plugin skill. **When adding a new skill directory under `skills/<name>/`, no additional registration is needed and nothing should be created under `.claude/` — do not add a `.claude/skills/<name>` symlink.** There is no `.claude/skills/` directory in this repo; don't recreate one.
 
 ## Commands
 

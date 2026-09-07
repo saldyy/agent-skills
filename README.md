@@ -28,7 +28,7 @@ This repo doubles as a Claude Code plugin and a single-plugin marketplace.
 claude --plugin-dir /path/to/agent-skills
 ```
 
-**As a plain project skill** — if you just clone this repo and open it directly in Claude Code, `nodejs` and `golang` also auto-load as project skills (via symlinks under `.claude/skills/`), no plugin install required.
+Skill discovery is driven entirely by `.claude-plugin/plugin.json`'s `"skills": "./skills"` field — every top-level `skills/<name>/` directory is picked up automatically, with no per-skill registration or symlink needed.
 
 ## Commands
 
@@ -43,10 +43,9 @@ claude --plugin-dir /path/to/agent-skills
 │       ├── SKILL.md      # entry point: when to use, common workflows, links to rules/
 │       └── rules/*.md    # one topic per file, loaded on demand
 ├── .claude/
-│   ├── commands/*.md     # project slash commands
-│   └── skills/           # symlinks into skills/<name>, for direct-clone use
+│   └── commands/*.md     # project slash commands
 └── .claude-plugin/
-    ├── plugin.json       # plugin manifest
+    ├── plugin.json       # plugin manifest; "skills": "./skills" auto-discovers every skill above
     └── marketplace.json  # marketplace catalog listing this repo as its one plugin
 ```
 
