@@ -12,6 +12,31 @@ description: >
   request that touches a Terraform module.
 metadata:
   tags: terraform, iac, aws, gcp, multi-cloud, hcl, validate, tflint
+hooks:
+  PostToolUse:
+    - matcher: "Edit|Write|MultiEdit"
+      hooks:
+        - type: command
+          timeout: 120
+          statusMessage: "terraform fmt + validate"
+          command: |
+            f=$(jq -r '.tool_input.file_path // empty')
+            case "$f" in *.tf|*.tfvars) ;; *) exit 0 ;; esac
+            ctx() { jq -n --arg c "$1" '{hookSpecificOutput:{hookEventName:"PostToolUse",additionalContext:$c}}'; }
+            block() { jq -n --arg r "$1" '{decision:"block",reason:$r}'; }
+            if ! command -v terraform >/dev/null; then
+              ctx "terraform is not installed, so fmt/validate did not run. Tell the user and list the commands to run: terraform fmt, terraform init -backend=false, terraform validate."; exit 0
+            fi
+            d=$(dirname "$f")
+            if ! out=$(terraform fmt -no-color "$f" 2>&1); then block "terraform fmt failed on $f:
+            $out"; exit 0; fi
+            if out=$(terraform -chdir="$d" validate -no-color 2>&1); then ctx "terraform fmt + validate passed in $d."; exit 0; fi
+            if grep -qiE 'terraform init|missing required provider|module not installed|not yet installed|inconsistent dependency lock' <<<"$out"; then
+              ctx "terraform fmt ok. terraform validate needs init: run 'terraform init -backend=false' in $d, then 'terraform validate'."
+            else
+              block "terraform validate failed in $d:
+            $out"
+            fi
 ---
 
 ## When to use
@@ -49,9 +74,12 @@ boolean toggles before their companion config-object variable, and put
 cross-variable checks on the resource, not the variable block. See
 [rules/adding-variables.md](rules/adding-variables.md).
 
-**Validating a change**: run `terraform init -backend=false` once, then
-`terraform validate` and `tflint --recursive` from inside the module
-directory after every change. See
+**Validating a change**: once this skill is loaded, a `PostToolUse` hook
+(in this file's frontmatter) runs `terraform fmt` on every edited `*.tf` /
+`*.tfvars` file and `terraform validate` on its directory, feeding failures
+back to Claude. It never runs `init` itself — if validate needs it, run
+`terraform init -backend=false` once in the module directory. `tflint
+--recursive` is still a manual step. See
 [rules/validate-and-lint.md](rules/validate-and-lint.md).
 
 **Something looks wrong but validate/lint pass**: check
