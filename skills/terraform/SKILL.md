@@ -74,12 +74,14 @@ boolean toggles before their companion config-object variable, and put
 cross-variable checks on the resource, not the variable block. See
 [rules/adding-variables.md](rules/adding-variables.md).
 
-**Validating a change**: once this skill is loaded, a `PostToolUse` hook
-(in this file's frontmatter) runs `terraform fmt` on every edited `*.tf` /
-`*.tfvars` file and `terraform validate` on its directory, feeding failures
-back to Claude. It never runs `init` itself — if validate needs it, run
-`terraform init -backend=false` once in the module directory. `tflint
---recursive` is still a manual step. See
+**Validating a change**: after editing any `*.tf` / `*.tfvars` file, run
+`terraform fmt` on that file and `terraform validate` in its directory. In
+Claude Code the `PostToolUse` hook in this file's frontmatter does that
+automatically and feeds failures back to the agent; OpenCode ignores skill
+`hooks`, so run the two commands yourself (or wire up an equivalent OpenCode
+plugin) and fix any errors before moving on. Neither path runs `init` —
+if validate needs it, run `terraform init -backend=false` once in the module
+directory. `tflint --recursive` is still a manual step. See
 [rules/validate-and-lint.md](rules/validate-and-lint.md).
 
 **Something looks wrong but validate/lint pass**: check
